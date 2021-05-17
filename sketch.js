@@ -35,7 +35,7 @@ function draw() {
     if(ufog.isTouching(helicopter)){
       gamestate="end";
     }
-    bullet.velocityX=5;
+    
   } else if(gamestate==="end"){
     ufog.destroyEach();
     ground.destroy();
@@ -69,6 +69,7 @@ function keyPressed(){
     bullet=createSprite(170,75,50,20);
     bullet.addImage(bulletimg);
     bullet.scale=0.2;
+    bullet.velocityX=5;
     helicopter.depth=bullet.depth+1;
   }
 }
