@@ -4,7 +4,7 @@ var gamestate="play",score=0;
 var ufog;
 
 function preload(){
-  helicopterimg=loadImage("Helicopter.png");
+  helicopterimg=loadImage("Helicopter.jpg");
   bulletimg=loadImage("Bullet.png");
   ufoimg=loadImage("UFO.png");
 }
@@ -32,27 +32,21 @@ function draw() {
 
     aliens();
 
-    if(keyDown("space")){
-      bullet=createSprite(170,75,50,20);
-      bullet.addImage(bulletimg);
-      bullet.scale=0.2;
-      helicopter.depth=bullet.depth+1;
-      if(bullet.isTouching(ufo)){
-        bullet.destroy();
-        ufog.destroyEach();
-        score++;
-      }
-    }
-
     if(ufog.isTouching(helicopter)){
       gamestate="end";
     }
-
+    bullet.velocityX=5;
   } else if(gamestate==="end"){
     ufog.destroyEach();
     ground.destroy();
     helicopter.destroy();    
     text("Game Over",width/2,height/2);
+  }
+
+  if(bullet!==undefined && bullet.isTouching(ufo)){
+    bullet.destroy();
+    ufog.destroyEach();
+    score++;
   }
 
   fill("black");
@@ -65,7 +59,16 @@ function aliens(){
   if(frameCount%300===0){
     ufo=createSprite(1210,80,80,30);
     ufo.addImage(ufoimg);
-    ufo.velocityX=-4;
+    ufo.velocityX=-(6+score/100);
     ufog.add(ufo);
+  }
+}
+
+function keyPressed(){
+  if(keyCode===32){
+    bullet=createSprite(170,75,50,20);
+    bullet.addImage(bulletimg);
+    bullet.scale=0.2;
+    helicopter.depth=bullet.depth+1;
   }
 }
