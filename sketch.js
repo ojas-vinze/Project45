@@ -1,7 +1,7 @@
 var helicopter,bullet,ufo,ground;
 var helicopterimg,bulletimg,ufoimg;
 var gamestate="play",score=0;
-var ufog;
+var ufog,bulletg;
 
 function preload(){
   helicopterimg=loadImage("Helicopter.jpg");
@@ -44,7 +44,9 @@ function draw() {
   }
 
   if(bullet!==undefined && bullet.isTouching(ufo)){
-    bullet.destroy();
+    bulletg = new Group();
+    bulletg.add(bullet);
+    bulletg.destroyEach();
     ufog.destroyEach();
     score++;
   }
@@ -70,6 +72,7 @@ function keyPressed(){
     bullet.addImage(bulletimg);
     bullet.scale=0.2;
     bullet.velocityX=5;
+    bullet.lifetime=400;
     helicopter.depth=bullet.depth+1;
   }
 }
